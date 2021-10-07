@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "apache-atlas.fullname" . }}
+  labels:
+    {{- include "apache-atlas.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  externalIPs:
+  - 13.234.110.173
+  ports:
+    - port: {{ .Values.service.externalPort }}
+      targetPort: {{ .Values.service.internalPort }}
+      protocol: TCP
+      name: {{ .Values.service.name }}
+  selector:
+    {{- include "apache-atlas.selectorLabels" . | nindent 4 }}
